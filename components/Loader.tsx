@@ -3,9 +3,9 @@ import React from 'react'
 
 function Loader() {
   return (
-    <div className='flex-between h-screen w-full'>
+    <div className='flex items-center justify-center h-screen w-full'>
         <Image
-            src='/icons/loader.svg'
+            src='/icons/loading-circle.svg'
             alt='Loader'
             width={72}
             height={72}
