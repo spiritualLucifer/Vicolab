@@ -46,6 +46,9 @@ export const useGetCalls = () => {
   const upcomingCalls = calls?.filter(({ state: { startsAt } }: Call) => {
     return startsAt && new Date(startsAt) > now
   })
+  const nextUpcomingMeetingTime = upcomingCalls?.[0]?.state?.startsAt
+  ? new Date(upcomingCalls[0].state.startsAt).toLocaleString()
+  : null;
 
-  return { endedCalls, upcomingCalls, callRecordings: calls, isLoading }
+  return { endedCalls, upcomingCalls, callRecordings: calls, isLoading,nextUpcomingMeetingTime }
 };
