@@ -5,13 +5,14 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import MeetingCard from './MeetingCard'
 import Loader from './Loader'
+import { useToast } from '@/hooks/use-toast'
 
 function CallType({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) {
   const { endedCalls, callRecordings, upcomingCalls, isLoading } = useGetCalls();
   const router = useRouter();
   const [recording, setRecording] = useState<CallRecording[]>([]);
+  const { toast } = useToast()
 
-  
   const getCalls = () => {
     switch (type) {
       case 'ended':
@@ -40,9 +41,14 @@ function CallType({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) {
    
   useEffect(()=>{
     const fetchRecordings = async()=>{
-      const callData = await Promise.all(callRecordings.map((meeting)=>meeting.queryRecordings()));
-      const recordings = callData.filter(call=>call.recordings.length > 0).flatMap(call=>call.recordings);
-      setRecording(recordings);
+      try {
+          const callData = await Promise.all(callRecordings.map((meeting)=>meeting.queryRecordings()));
+          const recordings = callData.filter(call=>call.recordings.length > 0).flatMap(call=>call.recordings);
+          setRecording(recordings);
+        
+      } catch (error) {
+          toast({title:"Heavy Load On Server Try Again Letter"})
+      }
     }
     if(type ==='recordings')fetchRecordings();
   },[type,callRecordings])
