@@ -51,7 +51,7 @@ function MeetingModal({isOpen,onClose,title,className,children,handleClick,butto
                                 />
                             )
                         } &nbsp;
-                        {buttonIcon || "Schedule Meeting"}
+                        {buttonText || "Schedule Meeting"}
                     </Button>
                 </div>
             </DialogContent>
